@@ -1,0 +1,34 @@
+BRAND PROTECTION MONITOR
+Project scope, version 1
+Author: Siddhi Bhalerao
+Started: July 2026
+
+THE PROBLEM
+Global trade in counterfeit goods reached 467 billion dollars in 2021, around 2.3 percent of world imports (OECD and EUIPO, Mapping Global Trade in Fakes 2025). Most of it now moves through online marketplaces in small parcels, one listing at a time. Marketplaces and brands need automated ways to find high risk listings among millions of legitimate ones.
+
+WHAT THIS PROJECT BUILDS
+An end to end pipeline that ingests marketplace listing data, screens it for product fraud and IP infringement signals, scores each listing and seller for risk, and surfaces ranked alerts in an investigator dashboard.
+
+WHAT IT DETECTS
+Product fraud: counterfeit listings, seller impersonation and listing hijack, review and rating fraud, grey market activity.
+IP infringement: trademark misuse and brand keyword stuffing, copied listings and copyright infringement, design lookalikes, linked repeat infringer networks.
+See typology_matrix.csv for the full mapping of each type to its detectable signals.
+
+DATA SOURCE
+Synthetic marketplace listing data modelled on real e-commerce fields (seller, brand, price, title, description, reviews, dates), generated at 1000 plus records with known fraud patterns planted for evaluation. Public datasets from Kaggle may supplement. No scraping of live marketplaces without terms of service review.
+
+PIPELINE STAGES
+Ingest raw listing data. Clean and validate into a SQLite database. Detect using a rule engine, statistical anomaly detection, review fraud signals, fuzzy trademark matching and text similarity. Score listings and sellers with a weighted composite risk score banded low, medium and high. Investigate through seller network analysis and case reports. Present in a Streamlit dashboard with an alert queue, filters and seller drill down.
+
+TECH STACK
+Python, SQL (SQLite), pandas, scikit-learn, rapidfuzz, networkx, Streamlit, GitHub.
+
+SUCCESS CRITERIA
+1. One command runs the pipeline end to end from raw data to dashboard ready alerts.
+2. Detection covers at least 10 documented signals across both fraud and IP typologies.
+3. Precision measured on a hand labelled sample, with thresholds tuned and the before and after recorded.
+4. One full SAR style case report produced on the highest risk seller.
+5. Built and documented in public over 21 days, with daily commits.
+
+OUT OF SCOPE
+Patent infringement detection, live marketplace scraping, image recognition models, production deployment.
