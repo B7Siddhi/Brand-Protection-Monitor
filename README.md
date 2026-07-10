@@ -2,7 +2,7 @@
 
 An end to end pipeline that detects product fraud and IP infringement in marketplace listings: it ingests listing data, screens it for counterfeit and infringement signals, scores risk, and surfaces ranked alerts for investigators.
 
-Built in public over 21 days. Follow the journey on (https://www.linkedin.com/in/siddhi-bhalerao7).
+Built in public over 21 days. Follow the journey on [LinkedIn](https://www.linkedin.com/in/siddhi-bhalerao7).
 ## Why
 
 Global trade in counterfeit goods reached 467 billion dollars in 2021, around 2.3 percent of world imports (OECD and EUIPO, Mapping Global Trade in Fakes 2025). Most of it now moves through online marketplaces one listing at a time. Finding those listings among millions of legitimate ones is a data problem, and this project is a working answer to it.
