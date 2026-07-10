@@ -1,0 +1,44 @@
+table,column,type,description
+sellers,seller_id,integer,Unique identifier for each marketplace seller
+sellers,seller_name,text,Display name of the seller account
+sellers,join_date,date,Date the seller account was created; young accounts with high activity are a fraud signal
+sellers,country,text,Seller registered country code
+sellers,is_authorised,integer,1 if the seller is an authorised reseller of any protected brand; unauthorised sellers of protected goods raise grey market signals
+sellers,created_at,timestamp,When the row was loaded into the database
+brands,brand_id,integer,Unique identifier for each brand
+brands,brand_name,text,Official brand spelling; raw variants like NIKE and nike are standardised to this during cleaning
+brands,is_protected,integer,1 if the brand is on the protection watchlist monitored by the pipeline
+brands,rrp_min,real,Lower bound of the genuine retail price range; prices far below this drive the price deviation signal
+brands,rrp_max,real,Upper bound of the genuine retail price range
+listings,listing_id,integer,Unique identifier for each marketplace listing
+listings,seller_id,integer,Seller who posted the listing; foreign key to sellers
+listings,brand_id,integer,Brand claimed by the listing; foreign key to brands; empty for unbranded items
+listings,title,text,Listing headline; screened for disguised brand terms like N1ke
+listings,description,text,Listing body text; identical descriptions across sellers indicate copied listings; missing descriptions are flagged not rejected because absence is itself a signal
+listings,category,text,Product category such as Trainers or Handbags; brand and category mismatches raise signals
+listings,price,real,Listing price standardised to GBP during cleaning
+listings,currency,text,Always GBP after cleaning; conversions are counted in the quality report
+listings,listed_date,date,Date the listing went live
+listings,review_count,integer,Number of reviews on the listing; counts inconsistent with seller age indicate review fraud
+listings,avg_rating,real,Average review rating; distributions skewed to 4.9 and above are a signal
+listings,image_ref,text,Image identifier; the same reference across unrelated sellers marks shared photos and supply rings
+listings,created_at,timestamp,When the row was loaded into the database
+reviews,review_id,integer,Unique identifier for each review
+reviews,listing_id,integer,Listing the review belongs to; foreign key to listings
+reviews,rating,integer,Star rating from 1 to 5
+reviews,review_text,text,Review body; near duplicate template text across reviews indicates purchased reviews
+reviews,review_date,date,Date the review was posted; bursts in time indicate review farming
+signals,signal_id,integer,Unique identifier for each detection signal
+signals,listing_id,integer,Listing the signal fired on; foreign key to listings
+signals,signal_type,text,Machine readable signal name such as price_deviation or brand_evasion
+signals,signal_source,text,Which detector produced it: rule then anomaly then review then trademark then similarity then network
+signals,signal_value,real,The measured number behind the signal such as the price to floor ratio
+signals,severity,integer,Signal weight from 1 to 5 used in composite risk scoring
+signals,detected_at,timestamp,When the signal was detected
+alerts,alert_id,integer,Unique identifier for each alert
+alerts,listing_id,integer,Listing the alert concerns; foreign key to listings
+alerts,seller_id,integer,Seller the alert concerns; foreign key to sellers
+alerts,risk_score,real,Weighted composite score built from contributing signals
+alerts,risk_band,text,low or medium or high; drives triage priority
+alerts,status,text,Workflow state: new then in_review then escalated then closed
+alerts,created_at,timestamp,When the alert was raised
