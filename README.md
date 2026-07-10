@@ -2,7 +2,7 @@
 
 An end to end pipeline that detects product fraud and IP infringement in marketplace listings: it ingests listing data, screens it for counterfeit and infringement signals, scores risk, and surfaces ranked alerts for investigators.
 
-Built in public over 21 days. Follow the journey on [LinkedIn](www.linkedin.com/in/siddhi-bhalerao7).
+Built in public over 21 days. Follow the journey on [LinkedIn]([www.linkedin.com/in/siddhi-bhalerao7](https://www.linkedin.com/in/siddhi-bhalerao7).
 
 ## Why
 
