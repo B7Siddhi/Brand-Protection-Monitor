@@ -1,0 +1,16 @@
+signal_id,signal_type,category,what_it_catches,detection_logic,threshold,severity,detector,implemented
+S01,price_below_floor,Product fraud,Counterfeit priced well under genuine retail,Listing price divided by brand rrp_min for protected brands,Ratio below 0.5,4,rule,Day 9
+S02,price_extreme,Product fraud,Blatant counterfeit pricing,Listing price divided by brand rrp_min for protected brands,Ratio below 0.3,5,rule,Day 9
+S03,young_seller_high_velocity,Product fraud,Fraud accounts flooding the marketplace on arrival,Listings per day of account age with account younger than 60 days,More than 0.5 listings per day,4,rule,Day 9
+S04,unauthorised_protected_seller,Product fraud,Grey market or counterfeit supply outside authorised channels,Protected brand listing from seller with is_authorised = 0 priced below rrp_min,Any occurrence,2,rule,Day 9
+S05,review_velocity,Product fraud,Purchased review volume,Total reviews across seller listings divided by account age in days,More than 10 reviews per day of account life,4,rule,Day 9
+S06,rating_skew,Product fraud,Inauthentic five star saturation,Average rating with meaningful review volume,Rating at or above 4.9 with more than 100 reviews,3,rule,Day 9
+S07,shared_image,Product fraud,Counterfeit supply rings using one photo set,Count of distinct sellers using the same image_ref,More than 1 seller per image,4,rule,Day 9
+S08,copied_description,IP infringement,Coordinated copied listings,Identical non empty description across distinct sellers,3 or more sellers word for word,4,rule,Day 9
+S09,missing_description,Product fraud,Low effort fraudulent listings,Empty description field kept from cleaning,Any occurrence,1,rule,Day 9
+S10,price_zscore_outlier,Product fraud,Prices statistically abnormal for the brand,Z-score of price within brand,Absolute z-score above 3,3,anomaly,Day 10
+S11,listing_burst,Product fraud,Bulk uploads typical of fraud tooling,Listings by one seller sharing one listed_date,More than 5 listings in a single day,3,anomaly,Day 10
+S12,duplicate_review_text,Product fraud,Template reviews from review farms,Near duplicate review_text across a seller's listings,Similarity above 0.9 on 3 or more reviews,3,review,Day 11
+S13,brand_evasion,IP infringement,Disguised brand names dodging keyword filters,Fuzzy match of title tokens against protected brand list,Match ratio above 85 with no exact match,5,trademark,Day 15
+S14,brand_reference_stuffing,IP infringement,Unbranded product riding brand search traffic,Protected brand name present in description of Generic brand listing,Any occurrence,3,trademark,Day 15
+S15,brand_category_mismatch,Product fraud,Brand listed outside its plausible categories,Listing category not in the brand's expected category set,Requires brand to category reference map,2,rule,Future work
