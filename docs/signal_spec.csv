@@ -14,3 +14,4 @@ S12,duplicate_review_text,Product fraud,Template reviews from review farms,Near 
 S13,brand_evasion,IP infringement,Disguised brand names dodging keyword filters,Fuzzy match of title tokens against protected brand list,Match ratio above 85 with no exact match,5,trademark,Day 15
 S14,brand_reference_stuffing,IP infringement,Unbranded product riding brand search traffic,Protected brand name present in description of Generic brand listing,Any occurrence,3,trademark,Day 15
 S15,brand_category_mismatch,Product fraud,Brand listed outside its plausible categories,Listing category not in the brand's expected category set,Requires brand to category reference map,2,rule,Future work
+S16,seller_behaviour_outlier,Product fraud,Sellers whose overall behaviour separates from the crowd,Isolation forest over account age and listings per day and reviews per day and average price to floor ratio,Top 15 percent most isolable sellers,3,anomaly,Day 10 added with the detector
