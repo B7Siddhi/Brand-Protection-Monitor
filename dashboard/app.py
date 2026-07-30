@@ -8,6 +8,7 @@
 
 import sqlite3
 import subprocess
+import sys
 from pathlib import Path
 import pandas as pd
 import streamlit as st
@@ -30,7 +31,11 @@ def ensure_pipeline_has_run():
     with st.spinner("First run detected: building the detection pipeline from scratch, "
                      "this takes about 20 seconds..."):
         for step in steps:
-            result = subprocess.run(["python3", f"src/{step}"], capture_output=True, text=True)
+            # sys.executable, not "python3": on Streamlit Cloud, the plain
+            # "python3" command can resolve to a different interpreter than
+            # the one Streamlit itself is running in, and only that exact
+            # interpreter has requirements.txt's packages installed.
+            result = subprocess.run([sys.executable, f"src/{step}"], capture_output=True, text=True)
             if result.returncode != 0:
                 st.error(f"Pipeline step {step} failed:\n{result.stderr}")
                 st.stop()
