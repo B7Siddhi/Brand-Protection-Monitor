@@ -7,12 +7,35 @@
 # Run from the project root:  streamlit run dashboard/app.py
 
 import sqlite3
+import subprocess
+from pathlib import Path
 import pandas as pd
 import streamlit as st
 
 st.set_page_config(page_title="Brand Protection Monitor", layout="wide")
 
 DB_PATH = "data/monitor.db"
+
+# The database is intentionally not committed to GitHub, it is generated
+# data, not source. On a fresh deployment (e.g. Streamlit Community Cloud)
+# there is no database yet, so the full pipeline runs once, automatically,
+# to build one. Locally, if you already ran the pipeline yourself, this
+# does nothing, since the file already exists.
+def ensure_pipeline_has_run():
+    if Path(DB_PATH).exists():
+        return
+    steps = ["generate_data.py", "clean_load.py", "rules_engine.py",
+              "anomaly_detector.py", "review_signals.py", "trademark_detector.py",
+              "similarity_detector.py", "risk_scorer.py"]
+    with st.spinner("First run detected: building the detection pipeline from scratch, "
+                     "this takes about 20 seconds..."):
+        for step in steps:
+            result = subprocess.run(["python3", f"src/{step}"], capture_output=True, text=True)
+            if result.returncode != 0:
+                st.error(f"Pipeline step {step} failed:\n{result.stderr}")
+                st.stop()
+
+ensure_pipeline_has_run()
 
 @st.cache_data(ttl=60)
 def load_data():
