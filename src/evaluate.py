@@ -16,7 +16,8 @@
 import sqlite3
 import pandas as pd
 
-con = sqlite3.connect("data/monitor.db")
+import config  # day 19: shared settings, see src/config.py
+con = sqlite3.connect(config.DB_PATH)
 truth = pd.read_csv("data/raw/ground_truth.csv")
 truth_ids = set(truth["listing_id"])
 

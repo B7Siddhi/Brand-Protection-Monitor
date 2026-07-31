@@ -12,10 +12,11 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-SIMILARITY = 0.9   # reviews this alike are treated as the same template
-MIN_COPIES = 3     # spec S12: 3 or more near duplicates on one listing
+import config  # day 19: shared settings, see src/config.py
+SIMILARITY = config.REVIEW_SIMILARITY_THRESHOLD  # reviews this alike are treated as the same template
+MIN_COPIES = config.REVIEW_MIN_COPIES            # spec S12: 3 or more near duplicates on one listing
 
-con = sqlite3.connect("data/monitor.db")
+con = sqlite3.connect(config.DB_PATH)
 cur = con.cursor()
 cur.execute("DELETE FROM signals WHERE signal_source = 'review'")
 

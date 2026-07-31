@@ -17,7 +17,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-con = sqlite3.connect("data/monitor.db")
+import config  # day 19: shared settings, see src/config.py
+con = sqlite3.connect(config.DB_PATH)
 
 sellers = pd.read_sql("SELECT seller_id, seller_name FROM sellers", con)
 listings = pd.read_sql(

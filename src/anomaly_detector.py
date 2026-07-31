@@ -9,8 +9,9 @@ import sqlite3
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 
-AS_OF = "2026-07-07"
-con = sqlite3.connect("data/monitor.db")
+import config  # day 19: shared settings, see src/config.py
+AS_OF = config.AS_OF_DATE
+con = sqlite3.connect(config.DB_PATH)
 cur = con.cursor()
 
 # rerunnable: clear previous anomaly signals

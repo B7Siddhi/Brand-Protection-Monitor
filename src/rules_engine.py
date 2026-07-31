@@ -7,7 +7,8 @@
 
 import sqlite3
 
-AS_OF = "2026-07-07"  # analysis date for account age calculations
+import config  # day 19: shared settings, see src/config.py
+AS_OF = config.AS_OF_DATE  # analysis date for account age calculations
 
 RULES = [
     {"signal_type": "price_below_floor", "severity": 4, "sql": """
@@ -80,7 +81,7 @@ RULES = [
         SELECT listing_id, 1 FROM listings WHERE description = ''"""},
 ]
 
-con = sqlite3.connect("data/monitor.db")
+con = sqlite3.connect(config.DB_PATH)
 cur = con.cursor()
 
 # rerunnable: clear previous rule signals before writing fresh ones

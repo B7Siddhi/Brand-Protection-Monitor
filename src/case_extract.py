@@ -7,7 +7,8 @@
 import sqlite3
 import pandas as pd
 
-con = sqlite3.connect("data/monitor.db")
+import config  # day 19: shared settings, see src/config.py
+con = sqlite3.connect(config.DB_PATH)
 
 top_seller_id = pd.read_sql("""
     SELECT seller_id FROM alerts
@@ -15,7 +16,7 @@ top_seller_id = pd.read_sql("""
 
 profile = pd.read_sql(f"""
     SELECT seller_name, join_date, country, is_authorised,
-           CAST(julianday('2026-07-07') - julianday(join_date) AS INTEGER) AS age_days
+           CAST(julianday('{config.AS_OF_DATE}') - julianday(join_date) AS INTEGER) AS age_days
     FROM sellers WHERE seller_id = {top_seller_id}""", con).iloc[0]
 
 listings = pd.read_sql(f"""

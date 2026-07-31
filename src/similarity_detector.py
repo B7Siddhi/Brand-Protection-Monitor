@@ -45,10 +45,11 @@
 import sqlite3
 import pandas as pd
 
+import config  # day 19: shared settings, see src/config.py
 PHRASES = ["style of", "inspired by", "same look", "look and feel",
            "compare to", "dupe for", "alternative to"]
 
-con = sqlite3.connect("data/monitor.db")
+con = sqlite3.connect(config.DB_PATH)
 cur = con.cursor()
 cur.execute("DELETE FROM signals WHERE signal_type = 'design_lookalike_language'")
 

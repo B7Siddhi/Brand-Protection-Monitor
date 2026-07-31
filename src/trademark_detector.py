@@ -15,15 +15,16 @@ import sqlite3
 import pandas as pd
 from rapidfuzz import fuzz
 
+import config  # day 19: shared settings, see src/config.py
 # Tuned on day 15: the spec's original 85 threshold missed nearly every real
 # disguise. Short words lose a large share of their score per character
 # changed (n1ke vs nike scores only 75), so 85 was calibrated for longer
 # strings and too strict for single-word brand evasion. Checked at 75 for
 # false positives across the full listing set first: zero, every hit was a
-# genuine planted evasion. Spec updated to match.
-EVASION_THRESHOLD = 75
+# genuine planted evasion. Spec updated to match, now lives in config.py.
+EVASION_THRESHOLD = config.BRAND_EVASION_THRESHOLD
 
-con = sqlite3.connect("data/monitor.db")
+con = sqlite3.connect(config.DB_PATH)
 cur = con.cursor()
 cur.execute("DELETE FROM signals WHERE signal_source = 'trademark'")
 

@@ -9,8 +9,9 @@ import sqlite3
 import pandas as pd
 from pathlib import Path
 
+import config  # day 19: shared settings, see src/config.py
 RAW = Path("data/raw")
-DB = Path("data/monitor.db")
+DB = Path(config.DB_PATH)
 REJECTS = Path("data/rejects_log.csv")
 
 # static demo FX rates for standardising to GBP
@@ -89,7 +90,7 @@ cur = con.cursor()
 # rebuild tables from the schema so the pipeline is rerunnable end to end
 for t in ["alerts", "signals", "reviews", "listings", "brands", "sellers"]:
     cur.execute(f"DROP TABLE IF EXISTS {t}")
-cur.executescript(Path("src/schema.sql").read_text())
+cur.executescript(Path(config.SCHEMA_PATH).read_text())
 
 # reviews table, schema v2: added today because review text arrives with the raw data
 cur.executescript("""

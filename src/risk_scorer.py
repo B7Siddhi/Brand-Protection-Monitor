@@ -14,10 +14,11 @@
 import sqlite3
 import pandas as pd
 
-HIGH, MEDIUM = 12, 6
+import config  # day 19: shared settings, see src/config.py
+HIGH, MEDIUM = config.RISK_HIGH, config.RISK_MEDIUM
 BONUS = {1: 1.0, 2: 1.15}   # 3+ sources handled below
 
-con = sqlite3.connect("data/monitor.db")
+con = sqlite3.connect(config.DB_PATH)
 cur = con.cursor()
 
 signals = pd.read_sql("""
